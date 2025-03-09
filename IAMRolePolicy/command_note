@@ -1,0 +1,2 @@
+chmod +x create_lambda_iam_role.sh
+./create_lambda_iam_role.sh your-aws-profile
