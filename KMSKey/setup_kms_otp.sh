@@ -1,7 +1,7 @@
 #!/bin/bash
 
 AWS_REGION="ap-south-1"  # Change to your AWS region
-AWS_ACCOUNT_ID="533267268334"  # Replace with your AWS account ID
+AWS_ACCOUNT_ID="XXXXXXXXXXXX"  # Replace with your AWS account ID
 DYNAMODB_TABLE_NAME="otp_main"  # Your DynamoDB table name
 LAMBDA_ROLE="arn:aws:iam::$AWS_ACCOUNT_ID:role/service-role/deliver-otp-lambda-role-1agnqskx"
 AWS_PROFILE=${1:-"default"}  # Allow passing profile as argument, default to "default"
