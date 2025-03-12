@@ -20,8 +20,9 @@ cd frontend
 ```
 ### 2. Install Dependencies 
 ```sh
-cd FrontendApp
+cd frontend
 npm install axios
+npm install react-router-dom  # Installation required - Redirect HomePage.js after successful OTP verfication.
 ```
 ### 3. Update **`src/App.js`**
 Replace **`App.js`** with:
@@ -57,7 +58,7 @@ export default function OTPPage() {
 
     const generateOtp = async () => {
         try {
-            const response = await axios.post(`${API_BASE_URL}/deliver-otp`, {
+            const response = await axios.post(`${API_BASE_URL}/generate-otp`, {
                 user_id: userId,
                 method,
                 recipient,

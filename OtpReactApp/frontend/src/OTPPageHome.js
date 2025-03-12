@@ -1,13 +1,15 @@
 import { useState } from "react";
 import axios from "axios";
+import { useNavigate } from "react-router-dom"; // Import useNavigate
 import API_BASE_URL from "./config";
 
-export default function OTPPage() {
+export default function OTPPageHome() {
     const [userId, setUserId] = useState("");
     const [method, setMethod] = useState("email");
     const [recipient, setRecipient] = useState("");
     const [otp, setOtp] = useState("");
     const [message, setMessage] = useState("");
+    const navigate = useNavigate(); // Initialize useNavigate
 
     const generateOtp = async () => {
         try {
@@ -29,7 +31,16 @@ export default function OTPPage() {
                 otp_code: otp,
             });
             setMessage(response.data.message);
+
+            // Check if the response contains a successful message
+            console.log("OTP verification response:", response.data); // Debugging log
+
+            if (response.data.message === "OTP verified successfully") {  // Adjust based on your API message
+                console.log("OTP verification successful, redirecting to HomePage...");
+                navigate("/home");  // Redirect to /home if OTP is successfully verified
+            }
         } catch (error) {
+            console.error("Error during OTP verification:", error);
             setMessage("Invalid or expired OTP");
         }
     };
@@ -40,7 +51,7 @@ export default function OTPPage() {
             justifyContent: "center",
             alignItems: "center",
             height: "100vh",
-            background: "linear-gradient(to right, #6a11cb, #2575fc)" // Background gradient
+            background: "linear-gradient(to right, #6a11cb, #2575fc)"
         }}>
             <div style={{
                 backgroundColor: "white",
@@ -52,7 +63,6 @@ export default function OTPPage() {
             }}>
                 <h2 style={{ marginBottom: "20px", color: "#333" }}>OTP Authentication</h2>
 
-                {/* Input Fields Container */}
                 <div style={{ display: "flex", flexDirection: "column", gap: "10px" }}>
                     <input
                         type="text"
@@ -60,7 +70,7 @@ export default function OTPPage() {
                         value={userId}
                         onChange={(e) => setUserId(e.target.value)}
                         style={{
-                            width: "93%", // Applied only to input boxes
+                            width: "93%",
                             padding: "12px",
                             borderRadius: "8px",
                             border: "1px solid #ccc",
@@ -73,7 +83,7 @@ export default function OTPPage() {
                         value={method}
                         onChange={(e) => setMethod(e.target.value)}
                         style={{
-                            width: "100%", // Keeping dropdown unchanged
+                            width: "100%",
                             padding: "12px",
                             borderRadius: "8px",
                             border: "1px solid #ccc",
@@ -91,7 +101,7 @@ export default function OTPPage() {
                         value={recipient}
                         onChange={(e) => setRecipient(e.target.value)}
                         style={{
-                            width: "93%", // Applied only to input boxes
+                            width: "93%",
                             padding: "12px",
                             borderRadius: "8px",
                             border: "1px solid #ccc",
@@ -100,10 +110,10 @@ export default function OTPPage() {
                         }}
                     />
 
-                    <button 
-                        onClick={generateOtp} 
+                    <button
+                        onClick={generateOtp}
                         style={{
-                            width: "100%", // Keeping buttons unchanged
+                            width: "100%",
                             padding: "12px",
                             backgroundColor: "#007bff",
                             color: "white",
@@ -123,7 +133,7 @@ export default function OTPPage() {
                         value={otp}
                         onChange={(e) => setOtp(e.target.value)}
                         style={{
-                            width: "93%", // Applied only to input boxes
+                            width: "93%",
                             padding: "12px",
                             borderRadius: "8px",
                             border: "1px solid #ccc",
@@ -132,10 +142,10 @@ export default function OTPPage() {
                         }}
                     />
 
-                    <button 
-                        onClick={verifyOtp} 
+                    <button
+                        onClick={verifyOtp}
                         style={{
-                            width: "100%", // Keeping buttons unchanged
+                            width: "100%",
                             padding: "12px",
                             backgroundColor: "#28a745",
                             color: "white",
