@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # Load configuration
-CONFIG_FILE="config.ini"
+CONFIG_FILE="./config.ini"
 if [ -f "$CONFIG_FILE" ]; then
     source "$CONFIG_FILE"
 else
@@ -27,12 +27,19 @@ aws dynamodb create-table \
     --region "$AWS_REGION" \
     --profile "$PROFILE"
 
-# Enable TTL on expiration_timestamp
+# # Enable TTL on expiration_timestamp
+# aws dynamodb update-time-to-live \
+#     --table-name "$TABLE_NAME" \
+#     --time-to-live-specification Enabled=true,AttributeName=expiration_timestamp \
+#     --region "$AWS_REGION" \
+#     --profile "$PROFILE"
+
+# Enable TTL on ttl_timestamp (numeric epoch time field)
 aws dynamodb update-time-to-live \
     --table-name "$TABLE_NAME" \
-    --time-to-live-specification Enabled=true,AttributeName=expiration_timestamp \
+    --time-to-live-specification Enabled=true,AttributeName=ttl_timestamp \
     --region "$AWS_REGION" \
     --profile "$PROFILE"
 
 # Output success message
-echo "DynamoDB table '$TABLE_NAME' created successfully with TTL enabled on 'expiration_timestamp'"
+echo "DynamoDB table '$TABLE_NAME' created successfully with TTL enabled on 'ttl_timestamp'"
