@@ -1,6 +1,4 @@
 #!/bin/bash
-
-
 if [ -z "$1" ]; then
   echo "Usage: $0 <AWS_PROFILE>"
   exit 1
@@ -10,9 +8,9 @@ PROFILE=$1
 AWS_REGION=$(aws configure get region --profile $PROFILE)
 AWS_ACCOUNT_ID=$(aws sts get-caller-identity --profile $PROFILE --query Account --output text)
 ROLE_NAME="otp-service-lambda-role-xbo4r961"
-KMS_KEY_ID="56733c0f-c7b9-4401-9cd7-9dd9ff1a92a4"
+KMS_KEY_ID="7b1c2224-a334-4502-981e-2c3119dc278d" # arn:aws:kms:us-east-1:183631309002:key/7b1c2224-a334-4502-981e-2c3119dc278d
 DYNAMODB_TABLE="otp_main"
-LAMBDA_FUNCTIONS=("generate-otp-lambda" "verify-otp-lambda")
+LAMBDA_FUNCTIONS=("generate-otp" "verify-otp")
 
 # Step 1: Create IAM Role
 echo "Creating IAM Role: $ROLE_NAME"
@@ -89,12 +87,13 @@ aws iam put-role-policy --profile $PROFILE --role-name $ROLE_NAME \
   }"
 
 # Step 3: Attach IAM Role to Lambda Functions
-echo "Attaching IAM Role to Lambda Functions"
-for FUNCTION in "${LAMBDA_FUNCTIONS[@]}"; do
-  echo "Updating function: $FUNCTION"
-  aws lambda update-function-configuration --profile $PROFILE \
-    --function-name $FUNCTION \
-    --role arn:aws:iam::$AWS_ACCOUNT_ID:role/$ROLE_NAME
-done
+# echo "Attaching IAM Role to Lambda Functions"
+
+# for FUNCTION in "${LAMBDA_FUNCTIONS[@]}"; do
+#   echo "Updating function: $FUNCTION"
+#   aws lambda update-function-configuration --profile $PROFILE \
+#     --function-name $FUNCTION \
+#     --role arn:aws:iam::$AWS_ACCOUNT_ID:role/$ROLE_NAME
+# done
 
 echo "✅ IAM Role setup completed successfully!"
