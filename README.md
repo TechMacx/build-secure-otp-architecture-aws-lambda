@@ -1,5 +1,13 @@
 # OTP Service Setup Guide
 
+* **Link: https://aws.amazon.com/blogs/messaging-and-targeting/build-a-secure-one-time-password-architecture-with-aws/**
+
+__Application architecture__ <br>
+![alt text](image-10.png)
+
+__AWS architecture__ <br>
+![alt text](image.png)
+
 ## Step 1: Create IAM Role for Lambda Functions
 Run the following AWS CLI command to create the IAM role:
 ```bash
